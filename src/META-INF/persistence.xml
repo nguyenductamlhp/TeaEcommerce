@@ -8,9 +8,9 @@
 		<class>com.t3h.ecommerce.entity.EcomProductCategory</class>
 
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.13.117.2:3306/t3h_ecommerce" />
-			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.13.117.2:3306/demo" />
+			<property name="javax.persistence.jdbc.user" value="adminEU8DblB" />
+			<property name="javax.persistence.jdbc.password" value="1JHaF8_7iJj7" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 		</properties>
 	</persistence-unit>
