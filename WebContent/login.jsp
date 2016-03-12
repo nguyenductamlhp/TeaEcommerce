@@ -1,7 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -95,7 +92,7 @@
 				<div class="col-sm-6 ">
 					<div class="logo">
 						<h1>
-							<a href="index.html">e<span>Electronics</span></a>
+							<a href="index.jsp">e<span>Electronics</span></a>
 						</h1>
 					</div>
 				</div>
@@ -110,26 +107,20 @@
 		<div class="container">
 			<div class="row" style="height: 339px">
 				<div class="col-md-5 col-md-offset-3">
-					<form role="form" class="form-signin"
-						action="MyLogin" method="post">
+					<form role="form" class="form-signin" action="LoginServlet">
 						<h2 class="form-signin-heading">Please sign in</h2>
-						<label class="sr-only" for="inputUserName">User name</label> <input
-							type="username" autofocus="" required="" placeholder="User name"
-							name="username" class="form-control" id="inputUserName">
-						<label class="sr-only" for="inputPassword">Password</label> <input
-							type="password" name="password" required=""
-							placeholder="Password" class="form-control" id="inputPassword">
+						<label class="sr-only" for="inputUserName">User name</label> 
+						<input type="username" autofocus="" required="" placeholder="User name" name="username" class="form-control" id="inputUserName">
+						<label class="sr-only" for="inputPassword">Password</label> 
+						<input type="password" name="password" required="" placeholder="Password" class="form-control" id="inputPassword">
+						
 						<div class="checkbox">
 							<label> <input type="checkbox" value="remember-me">
 								Remember me
 							</label>
 						</div>
-						<button type="submit" class="btn btn-lg btn-primary btn-block">Sign
-							in</button>
+						<button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
 					</form>
-					<c:if test="${str!=null}">
-					<font color="red"><sup>*</sup><c:out value="${str}"></c:out></font>
-					</c:if>
 				</div>
 			</div>
 		</div>

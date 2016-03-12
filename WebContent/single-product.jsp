@@ -1,9 +1,27 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@page import="model.data.Product"%>
+<%@page import="model.service.ProductService"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.data.Product"%>
+<%@page import="model.service.ProductService"%>
+<%@page import="model.data.User"%>
+
+	<%
+	ProductService proService = new ProductService();
+    List<Product> list = proService.getAllProduct();
+    %>
+
+<%-- <c:import "java.util.List"/> --%>
+<%-- <c:import "java.util.ArrayList"/> --%>
+
+
+<!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>eElectronics - HTML eCommerce Template</title>
@@ -39,11 +57,23 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i><c:if test="${fullName!=null}"><c:out value="${fullName}"></c:out></c:if><c:if test="${fullName==null}">My Account</c:if></a></li>
+                            <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
-                            <li><a href="cart.jsp"><i class="fa fa-user"></i> My Cart</a></li>
-                            <li><a href="checkout.jsp"><i class="fa fa-user"></i> Checkout</a></li>
-                            <li><a href="login.jsp"><i class="fa fa-user"></i> Login</a></li>
+                            <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
+                            <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
+                            <%
+                            if (request.getSession().getAttribute("user") != null) {
+                            	User user = (User)request.getSession().getAttribute("user");
+                            %>
+                            <li><a href="#"><i class="fa fa-user"></i> <%=user.getFullName() %></a></li>
+                            <%
+                            }
+                            else {
+                            %>
+                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            <%
+                            }
+                            %>
                         </ul>
                     </div>
                 </div>
@@ -110,7 +140,7 @@
                         <li><a href="shop.jsp">Shop page</a></li>
                         <li class="active"><a href="single-product.jsp">Single product</a></li>
                         <li><a href="cart.jsp">Cart</a></li>
-                        <li><a href="checkout.jsp">Checkout</a></li>
+                        <li><a href="checkout.html">Checkout</a></li>
                         <li><a href="#">Category</a></li>
                         <li><a href="#">Others</a></li>
                         <li><a href="#">Contact</a></li>
@@ -131,8 +161,7 @@
             </div>
         </div>
     </div>
-    
-    
+	    
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -140,91 +169,87 @@
                 <div class="col-md-4">
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Search Products</h2>
-                        <form action="">
-                            <input type="text" placeholder="Search products...">
-                            <input type="submit" value="Search">
+                        <form action="SearchProductServlet">
+                            <input type="text" name="SearchKey" placeholder="Search products...">
+                            <input type="submit" >
                         </form>
                     </div>
                     
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Products</h2>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
+                        <%
+                        for (Product product : list) {
+                        %>
+                        	<div class="thubmnail-recent">
+                            	<img src="<%=product.getImageLink()%>" class="recent-thumb" alt="">
+                            	<h2><a href=""><%=product.getName()%></a></h2>
+								<div class="product-sidebar-price">
+                                	<ins>$<%=product.getPrice()%></ins> <del>$<%=product.getPrice_promotion()%></del>
+                            	</div>                             
+                        	</div>
+                        <%	
+                        }
+                        %>
                     </div>
                     
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Recent Posts</h2>
                         <ul>
-                            <li><a href="">Sony Smart TV - 2015</a></li>
-                            <li><a href="">Sony Smart TV - 2015</a></li>
-                            <li><a href="">Sony Smart TV - 2015</a></li>
-                            <li><a href="">Sony Smart TV - 2015</a></li>
-                            <li><a href="">Sony Smart TV - 2015</a></li>
+                        	<%
+                        	for (Product product : list) {
+                        	%>
+                        		<li><a href=""><%=product.getName() %></a></li>
+                        	<%
+                        	}
+                        	%>
                         </ul>
                     </div>
                 </div>
-                
+                <%
+                Product product = (Product) request.getAttribute("product");
+                if (product == null) {
+                	product = list.get(0);
+                }
+                else {
+                	product = proService.getProduct(product.getID());
+                }
+                %>
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="product-breadcroumb">
-                            <a href="">Home</a>
+                            <a href="index.jsp">Home</a>
                             <a href="">Category Name</a>
-                            <a href="">Sony Smart TV - 2015</a>
+                            <a href="SingleProductServlet?productID=<%=product.getID()%>"><%=product.getName() %></a>
                         </div>
                         
-                        <c:if test="${not empty ecomProduct}">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="product-images">
                                     <div class="product-main-img">
-                                        <img src='<c:out value="${ecomProduct.productImage}"></c:out>' alt="">
+                                        <img src="<%=product.getImageLink() %>" alt="">
                                     </div>
+                                    
                                     <div class="product-gallery">
-                                        <img src="img/product-thumb-1.jpg" alt="">
-                                        <img src="img/product-thumb-2.jpg" alt="">
-                                        <img src="img/product-thumb-3.jpg" alt="">
-                                        <img src="img/product-thumb-4.jpg" alt="">
+                                        <img src="<%=product.getImageLink() %>" alt="">
+                                        <img src="<%=product.getImageLink() %>" alt="">
+                                        <img src="<%=product.getImageLink() %>" alt="">
+                                        <img src="<%=product.getImageLink() %>" alt="">
                                     </div>
                                 </div>
                             </div>
                             
                             <div class="col-sm-6">
                                 <div class="product-inner">
-                                    <h2 class="product-name"><c:out value="${ecomProduct.productName}"></c:out></h2>
+                                    <h2 class="product-name"><%=product.getName() %></h2>
                                     <div class="product-inner-price">
-                                        <ins>$<c:out value="${ecomProduct.productPricePromotion}"></c:out></ins> <del>$<c:out value="${ecomProduct.productPrice}"></c:out></del>
+                                        <ins>$<%=product.getPrice()%></ins> <del>$<%=product.getPrice_promotion() %></del>
                                     </div>    
                                     
-                                    <form action="AddtoCart" class="cart">
-                                        <input type="hidden" name="productid" value="<c:out value="${ecomProduct.productId}"></c:out>"/>
+                                    <form action="CartServlet" class="cart">
                                         <div class="quantity">
                                             <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
+                                            <input type="product" >
+                                            <%request.setAttribute("cartproduct", product); %>
                                         </div>
                                         <button class="add_to_cart_button" type="submit">Add to cart</button>
                                     </form>   
@@ -241,7 +266,8 @@
                                         <div class="tab-content">
                                             <div role="tabpanel" class="tab-pane fade in active" id="home">
                                                 <h2>Product Description</h2>  
-                                                <p><c:out value="${ecomProduct.description}"></c:out></p>
+                                                <p><%=product.getDescription() %></p>
+
                                             </div>
                                             <div role="tabpanel" class="tab-pane fade" id="profile">
                                                 <h2>Reviews</h2>
@@ -269,100 +295,33 @@
                                 </div>
                             </div>
                         </div>
-                        </c:if>
+                        
                         
                         <div class="related-products-wrapper">
                             <h2 class="related-products-title">Related Products</h2>
                             <div class="related-products-carousel">
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-1.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                        </div>
-                                    </div>
+                            	<%
+                        		for (Product prod : list) {
+                        		%>
 
-                                    <h2><a href="">Sony Smart TV - 2015</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$700.00</ins> <del>$800.00</del>
-                                    </div> 
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-2.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Apple new mac book 2015 March :P</a></h2>
-                                    <div class="product-carousel-price">
-                                        <ins>$899.00</ins> <del>$999.00</del>
-                                    </div> 
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-3.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Apple new i phone 6</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$400.00</ins> <del>$425.00</del>
-                                    </div>                                 
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-4.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Sony playstation microsoft</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$200.00</ins> <del>$225.00</del>
-                                    </div>                            
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-5.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Sony Smart Air Condtion</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$1200.00</ins> <del>$1355.00</del>
-                                    </div>                                 
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-6.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Samsung gallaxy note 4</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$400.00</ins>
-                                    </div>                            
-                                </div>                                    
+		                        	<div class="single-product">
+		                       		    <div class="product-f-image">
+			                           		<img src="<%=prod.getImageLink()%> " alt="">
+			                                <div class="product-hover">
+			                                	<a href="cart.jsp" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+			                                    <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
+			                                </div>
+		                                </div>
+		
+		                                <h2><a href=""><%=prod.getName() %></a></h2>
+										    <div class="product-carousel-price">
+		                                        <ins>$<%=prod.getPrice() %></ins> <del>$<%=prod.getPrice_promotion() %></del>
+		                                   	</div> 
+		                            </div>
+                        	
+		                        <%	
+		                        }
+		                        %>
                             </div>
                         </div>
                     </div>                    

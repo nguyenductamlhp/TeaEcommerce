@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1"
-	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="eElectronicSite">
-		<class>com.t3h.ecommerce.entity.Account</class>
-		<class>com.t3h.ecommerce.entity.EcomProduct</class>
-		<class>com.t3h.ecommerce.entity.EcomProductCategory</class>
-
-		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.13.117.2:3306/demo" />
-			<property name="javax.persistence.jdbc.user" value="adminEU8DblB" />
-			<property name="javax.persistence.jdbc.password" value="1JHaF8_7iJj7" />
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-		</properties>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="Ecommerce">
+		<class>model.entity.Account</class>
+		<class>model.entity.EcomProduct</class>
+		<class>model.entity.EcomProductCategory</class>
 	</persistence-unit>
 </persistence>

@@ -256,7 +256,7 @@ z-index: 9;
 .single-promo:hover {color: #fff;background: #222;border-color: #222}
 
 .section-title {
-  font-family: "Raleway",sans-serif;
+  font-family: "Arial",sans-serif;
   font-size: 50px;
   font-weight: 100;
   margin-bottom: 50px;
@@ -445,6 +445,7 @@ padding: 35px 0 180px;}
 
 .footer-about-us h2 {
   font-weight: 200;
+  font-family: "Arial", sans-serif;
 }
 .footer-menu ul {
     list-style: outside none none;

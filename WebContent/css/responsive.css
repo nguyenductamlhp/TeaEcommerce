@@ -107,7 +107,9 @@ div.cart-collaterals ul.products li.product {
   margin-bottom: 30px;
 } 
 .section-title {
-  font-size: 35px;
+  font-size: 60px;
+  font-weight: 600;
+  font-family: sans-serif;
 }  
     
     

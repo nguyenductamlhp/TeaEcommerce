@@ -1,9 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@page import="model.data.Product"%>
+<%@page import="model.service.ProductService"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.data.User" %>
+
+<%
+ProductService productService  = new ProductService();
+List<Product> list = productService.getProductList();
+%>
+
+<!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>eElectronics - HTML eCommerce Template</title>
@@ -39,11 +51,23 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i><c:if test="${fullName!=null}"><c:out value="${fullName}"></c:out></c:if><c:if test="${fullName==null}">My Account</c:if></a></li>
+                            <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
-                            <li><a href="cart.jsp"><i class="fa fa-user"></i> My Cart</a></li>
-                            <li><a href="checkout.jsp"><i class="fa fa-user"></i> Checkout</a></li>
-                            <li><a href="login.jsp"><i class="fa fa-user"></i> Login</a></li>
+                            <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
+                            <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
+                            <%
+                            if (request.getSession().getAttribute("user") != null) {
+                            	User user = (User)request.getSession().getAttribute("user");
+                            %>
+                            <li><a href="#"><i class="fa fa-user"></i> <%=user.getFullName() %></a></li>
+                            <%
+                            }
+                            else {
+                            %>
+                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            <%
+                            }
+                            %>
                         </ul>
                     </div>
                 </div>
@@ -110,7 +134,7 @@
                         <li><a href="shop.jsp">Shop page</a></li>
                         <li><a href="single-product.jsp">Single product</a></li>
                         <li class="active"><a href="cart.jsp">Cart</a></li>
-                        <li><a href="checkout.jsp">Checkout</a></li>
+                        <li><a href="checkout.html">Checkout</a></li>
                         <li><a href="#">Category</a></li>
                         <li><a href="#">Others</a></li>
                         <li><a href="#">Contact</a></li>
@@ -140,7 +164,7 @@
                 <div class="col-md-4">
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Search Products</h2>
-                        <form action="#">
+                        <form action="SearchProductServlet">
                             <input type="text" placeholder="Search products...">
                             <input type="submit" value="Search">
                         </form>
@@ -148,44 +172,32 @@
                     
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Products</h2>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
+                        <%
+                        for (Product product : list) {
+                        %>
+                        	<div class="thubmnail-recent">
+                            	<img src="<%=product.getImageLink()%>" class="recent-thumb" alt="">
+                            	<h2><a href=""><%=product.getName()%></a></h2>
+
+                            	<div class="product-sidebar-price">
+                                	<ins>$<%=product.getPrice()%></ins> <del>$<%=product.getPrice_promotion()%></del>
+                            	</div>                             
+                        	</div>
+                        <%	
+                        }
+                        %>
                     </div>
                     
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Recent Posts</h2>
                         <ul>
-                            <li><a href="#">Sony Smart TV - 2015</a></li>
-                            <li><a href="#">Sony Smart TV - 2015</a></li>
-                            <li><a href="#">Sony Smart TV - 2015</a></li>
-                            <li><a href="#">Sony Smart TV - 2015</a></li>
-                            <li><a href="#">Sony Smart TV - 2015</a></li>
+							<%
+	                        for (Product product : list) {
+	                        %>
+								<li><a href="single-product.jsp"><%=product.getName() %></a></li>
+	                        <%	
+	                        }
+	                        %>
                         </ul>
                     </div>
                 </div>
@@ -193,54 +205,54 @@
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form method="post" action="#">
+                            <form method="post" action="CartServlet">
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
-                                            <th class="product-remove">&nbsp;</th>
-                                            <th class="product-thumbnail">&nbsp;</th>
+                                            <th class="product-remove">Remove</th>
+                                            <th class="product-thumbnail">Image</th>
                                             <th class="product-name">Product</th>
                                             <th class="product-price">Price</th>
                                             <th class="product-quantity">Quantity</th>
                                             <th class="product-subtotal">Total</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                    
-                                    <c:if test="${listProductCart!=null}">
-                                    <c:forEach items="${listProductCart}" var="productCart">
+                                    <%
+                                    Product product = (Product)request.getAttribute("cartproduct");
+                                    if (product == null) {
+                                    	product = (Product)productService.getProductList().get(0);
+                                    }
+                                    %>
+                                    	<tbody>
                                         <tr class="cart_item">
                                             <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="DeleteProduct?productid=<c:out value="${productCart.ecomProduct.productId}"></c:out>">×</a> 
+                                                <a title="Remove this item" class="remove" href="#">X</a> 
                                             </td>
 
                                             <td class="product-thumbnail">
-                                                <a href="ProductDetail?productid=<c:out value="${productCart.ecomProduct.productId}"></c:out>"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src='<c:out value="${productCart.ecomProduct.productImage}"></c:out>'></a>
+                                                <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="<%=product.getImageLink()%>"></a>
                                             </td>
 
                                             <td class="product-name">
-                                                <a href="ProductDetail?productid=<c:out value="${productCart.ecomProduct.productId}"></c:out>"><c:out value="${productCart.ecomProduct.productName}"></c:out></a> 
+                                                <a href="single-product.html">Ship Your Idea</a> 
                                             </td>
 
                                             <td class="product-price">
-                                                <span class="amount">£<c:out value="${productCart.ecomProduct.productPricePromotion}"></c:out></span> 
+                                                <span class="amount">$<%=product.getPrice() %></span> 
                                             </td>
 
                                             <td class="product-quantity">
                                                 <div class="quantity buttons_added">
-                                                    <input type="button" class="minus" value="-">
-                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="<c:out value="${productCart.quantity}"></c:out>" min="0" step="1">
-                                                    <input type="button" class="plus" value="+">
+<!--                                                     <input type="button" class="minus" value="-"> -->
+                                                    <input type="number" size="4" class="input-text qty text" name="quantity" title="Qty" value="1" min="0" step="1">
+<!--                                                     <input type="button" class="plus" value="+"> -->
                                                 </div>
                                             </td>
 
                                             <td class="product-subtotal">
-                                                <span class="amount">£<c:out value="${productCart.ecomProduct.productPricePromotion*productCart.quantity}"></c:out></span> 
+                                                <span class="amount">$</span> 
                                             </td>
                                         </tr>
-                                        </c:forEach>
-                                        </c:if>
-                                        
                                         <tr>
                                             <td class="actions" colspan="6">
                                                 <div class="coupon">
@@ -253,6 +265,9 @@
                                             </td>
                                         </tr>
                                     </tbody>
+                                    	
+                                    
+                                    
                                 </table>
                             </form>
 
@@ -263,7 +278,7 @@
                                 <h2>You may be interested in...</h2>
                                 <ul class="products">
                                     <li class="product">
-                                        <a href="single-product.jsp">
+                                        <a href="single-product.html">
                                             <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-2.jpg">
                                             <h3>Ship Your Idea</h3>
                                             <span class="price"><span class="amount">£20.00</span></span>
@@ -273,7 +288,7 @@
                                     </li>
 
                                     <li class="product">
-                                        <a href="single-product.jsp">
+                                        <a href="single-product.html">
                                             <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-4.jpg">
                                             <h3>Ship Your Idea</h3>
                                             <span class="price"><span class="amount">£20.00</span></span>
