@@ -9,7 +9,7 @@
 
 <%
 ProductService productService  = new ProductService();
-List<Product> list = productService.getProductList();
+List<Product> list = productService.getAllProduct();
 %>
 
 <!DOCTYPE html>
@@ -220,7 +220,7 @@ List<Product> list = productService.getProductList();
                                     <%
                                     Product product = (Product)request.getAttribute("cartproduct");
                                     if (product == null) {
-                                    	product = (Product)productService.getProductList().get(0);
+                                    	product = (Product)productService.getAllProduct().get(0);
                                     }
                                     %>
                                     	<tbody>

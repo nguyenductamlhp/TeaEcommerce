@@ -12,7 +12,7 @@
 
 	<%
 	ProductService proService = new ProductService();
-    List<Product> list = proService.getProductList();
+    List<Product> list = proService.getAllProduct();
     %>
 
 <!DOCTYPE html>
